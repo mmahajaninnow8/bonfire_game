@@ -36,26 +36,25 @@ class GameScreen extends React.Component {
                 />
               </div>
               <div>
-                <img className="aeroplane"
+                <img className="aeroplane obstacle-move"
                   style={{
                     right: "40%",
                     top: "40%",
-                    position: "absolute",
                     bottom: "10%",
                   }}
                   src={cartoon2}
                 />
               </div>
               <div>
-                <img className=""
-                  style={{ right: "10%", position: "absolute", bottom: "32%" }}
+                <img className="bird obstacle-move"
+                  style={{ right: "10%", bottom: "20%" }}
                   src={bird}
                 />
               </div>
-              <img
+              <img className="obstacle-move mountain"
                 style={{
                   right: "24%",
-                  position: "absolute",
+               
                   bottom: "0",
                   width: "20%",
                 }}
