@@ -42,32 +42,27 @@ function GameScreen () {
 
   const moveLeft =(objImage)=>{
     const oldValue = objImage.style.left
-    objImage.style.left=parseInt(oldValue) -1 +'%';
+    objImage.style.left=parseInt(oldValue) -5 +'px';
   }
   
   const moveUp =(objImage)=>{
     const oldValue = objImage.style.bottom
-    console.log("oldValueoldValueoldValue=",oldValue)
-    if(oldValue <= "85%"){
-      console.log("objImage.style.bottom")
-      objImage.style.bottom=parseInt(oldValue)+1 +'%';
+    if(parseInt(oldValue) < 500){
+      objImage.style.bottom=parseInt(oldValue)+5 +'px';
     }
   }
   
   const moveRight =(objImage)=>{
     const oldValue = objImage.style.left
 
-    objImage.style.left=parseInt(oldValue)+1 +'%';
+    objImage.style.left=parseInt(oldValue)+5 +'px';
   }
   
   const  moveDown =(objImage)=> {
     const oldValue = objImage.style.bottom
-
-    if(oldValue >= "1%"){
-      console.log("moveDownmoveDown=")
-      objImage.style.bottom=parseInt(oldValue)-1 +'%';
+    if(parseInt(oldValue) > 25){
+      objImage.style.bottom=parseInt(oldValue)-5 +'px';
     }
-   
   }
 
     return (
@@ -86,7 +81,7 @@ function GameScreen () {
             <div className="games-objecs">
               <div>
                 <img className="superman"
-                  style={{ left: "24%", position: "absolute", bottom: "10%" }}
+                  style={{ left: "200px", position: "absolute", bottom: "300px" }}
                   src={cartoon}
                 />
               </div>
