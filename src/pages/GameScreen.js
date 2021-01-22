@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { Container, Row, Col } from "reactstrap";
 import "./GameScreen";
 import MountainLayer from "../assets/images/mountainLayer.png";
@@ -13,10 +13,6 @@ import ComingSoon2 from "../assets/images/comingSoon2.png";
 import ComingSoon3 from "../assets/images/comingSoon3.png";
 //import logoShape from '../assets/images/logo-shape.png';
 
-<<<<<<< Updated upstream
-class GameScreen extends React.Component {
-  render() {
-=======
 function GameScreen () {
   useEffect(()=>{
     const image = document.querySelector(".superman")
@@ -74,7 +70,6 @@ function GameScreen () {
    
   }
 
->>>>>>> Stashed changes
     return (
       <>
         <div className="GameScreen">
@@ -90,7 +85,7 @@ function GameScreen () {
             </div>
             <div className="games-objecs">
               <div>
-                <img className=""
+                <img className="superman"
                   style={{ left: "24%", position: "absolute", bottom: "10%" }}
                   src={cartoon}
                 />
@@ -182,5 +177,5 @@ function GameScreen () {
       </>
     );
   }
-}
+
 export default GameScreen;
