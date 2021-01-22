@@ -68,7 +68,25 @@ function GameScreen () {
     return (
       <>
         <div className="GameScreen">
-          <div className="slide-view">
+        <div className="slide-view layer0" >
+            <span />
+          </div>
+          <div className="slide-view layer1" >
+            <span />
+          </div>
+          <div className="slide-view layer2" >
+            <span />
+          </div>
+          <div className="slide-view layer3">
+            <span />
+          </div>
+          <div className="slide-view layer4">
+            <span />
+          </div>
+          <div className="slide-view layer5">
+            <span />
+          </div>
+          <div className="slide-view layer6">
             <span />
           </div>
           <div className="GameScreen-bg">
@@ -97,7 +115,7 @@ function GameScreen () {
               </div>
               <div>
                 <img className="bird obstacle-move"
-                  style={{ right: "10%", bottom: "20%" }}
+                  style={{ right: "10%", bottom: "25%" }}
                   src={bird}
                 />
               </div>
