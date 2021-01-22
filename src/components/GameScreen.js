@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Container, Row, Col } from "reactstrap";
 import "./GameScreen";
 import MountainLayer from "../assets/images/mountainLayer.png";
@@ -13,8 +13,52 @@ import ComingSoon2 from "../assets/images/comingSoon2.png";
 import ComingSoon3 from "../assets/images/comingSoon3.png";
 //import logoShape from '../assets/images/logo-shape.png';
 
-class GameScreen extends React.Component {
-  render() {
+function GameScreen () {
+  useEffect(()=>{
+    const image = document.querySelector(".superman")
+    console.log("imageimageimage=",image)
+    window.addEventListener('keydown', (e) => {
+      e.preventDefault()
+     var key_code=e.keyCode
+     console.log("key_codekey_code=",key_code)
+            switch(key_code){
+              case 37: //left arrow key
+                moveLeft(image);
+                break;
+              case 38: //Up arrow key
+                moveUp(image);
+                break;
+              case 39: //right arrow key
+                moveRight(image);
+                break;
+              case 40: //down arrow key
+                moveDown(image);
+                break;						
+            }
+    
+    });
+  },[])
+
+
+  const moveLeft =(objImage)=>{
+    objImage.style.left=parseInt(objImage.style.left) -1 +'%';
+  
+  }
+  
+  const moveUp =(objImage)=>{
+    
+    objImage.style.bottom=parseInt(objImage.style.bottom)+1 +'%';
+  }
+  
+  const moveRight =(objImage)=>{
+    objImage.style.left=parseInt(objImage.style.left)+1 +'%';
+  }
+  
+  const  moveDown =(objImage)=> {
+    
+    objImage.style.bottom=parseInt(objImage.style.bottom)-1+'%';
+  }
+
     return (
       <>
         <div className="GameScreen">
@@ -30,8 +74,8 @@ class GameScreen extends React.Component {
             </div>
             <div className="games-objecs">
               <div>
-                <img className=""
-                  style={{ left: "24%", position: "absolute", bottom: "10%" }}
+                <img className="superman"
+                  style={{ left: "24%", position: "absolute", bottom: "20%" }}
                   src={cartoon}
                 />
               </div>
@@ -122,5 +166,5 @@ class GameScreen extends React.Component {
       </>
     );
   }
-}
+
 export default GameScreen;
