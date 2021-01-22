@@ -13,8 +13,68 @@ import ComingSoon2 from "../assets/images/comingSoon2.png";
 import ComingSoon3 from "../assets/images/comingSoon3.png";
 //import logoShape from '../assets/images/logo-shape.png';
 
+<<<<<<< Updated upstream
 class GameScreen extends React.Component {
   render() {
+=======
+function GameScreen () {
+  useEffect(()=>{
+    const image = document.querySelector(".superman")
+    console.log("imageimageimage=",image)
+    window.addEventListener('keydown', (e) => {
+      e.preventDefault()
+     var key_code=e.keyCode
+     console.log("key_codekey_code=",key_code)
+            switch(key_code){
+              case 37: //left arrow key
+                moveLeft(image);
+                break;
+              case 38: //Up arrow keynpm start
+                moveUp(image);
+                break;
+              case 39: //right arrow key
+                moveRight(image);
+                break;
+              case 40: //down arrow key
+                moveDown(image);
+                break;						
+            }
+    
+    });
+  },[])
+
+
+  const moveLeft =(objImage)=>{
+    const oldValue = objImage.style.left
+    objImage.style.left=parseInt(oldValue) -1 +'%';
+  }
+  
+  const moveUp =(objImage)=>{
+    const oldValue = objImage.style.bottom
+    console.log("oldValueoldValueoldValue=",oldValue)
+    if(oldValue <= "85%"){
+      console.log("objImage.style.bottom")
+      objImage.style.bottom=parseInt(oldValue)+1 +'%';
+    }
+  }
+  
+  const moveRight =(objImage)=>{
+    const oldValue = objImage.style.left
+
+    objImage.style.left=parseInt(oldValue)+1 +'%';
+  }
+  
+  const  moveDown =(objImage)=> {
+    const oldValue = objImage.style.bottom
+
+    if(oldValue >= "1%"){
+      console.log("moveDownmoveDown=")
+      objImage.style.bottom=parseInt(oldValue)-1 +'%';
+    }
+   
+  }
+
+>>>>>>> Stashed changes
     return (
       <>
         <div className="GameScreen">
@@ -111,7 +171,7 @@ class GameScreen extends React.Component {
                     <h3 className="cartoon-txt">Coming Soon !</h3>
                   </div>
                 </Col>
-              </Row>
+              </Row>c
             </Container>
           </div>
           <h4 className="contact-txt">
