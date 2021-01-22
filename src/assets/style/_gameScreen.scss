@@ -1,5 +1,6 @@
 .GameScreen {
   position: relative;
+  background-color: #d8f7ff;
   .slide-view {
     top: 0;
     left: 0;
@@ -8,17 +9,75 @@
     height: 100%;
     position: absolute;
     z-index: 1;
+    &.layer0 {
+      span {
+        background-size: 100% auto;
+        background-image: url("../images/moon-07.png");
+        animation: animatedB 90s infinite linear;
+        background-position: top center;
+      }
+    }
+    &.layer1 {
+      span {
+        background-image: url("../images/hills-06.png");
+        animation: animatedB 90s infinite linear;
+        background-position: top center;
+        // background-size: 50% auto;
+      }
+    }
+    &.layer2 {
+      span {
+        background-image: url("../images/hills-05.png");
+        animation: animatedB 30s infinite linear;
+        // background-size: 100% 700px;
+        // background-position: top center;
+        //opacity: 0.8;
+      }
+    }
+    &.layer3 {
+      span {
+        background-image: url("../images/hills-04.png");
+        animation: animatedB 50s infinite linear;
+        // background-size: 200% 500px;
+        // opacity: 0.9;
+      }
+    }
+    &.layer4 {
+      span {
+        background-image: url("../images/hills-03.png");
+        animation: animatedB 43s infinite linear;
+        background-position: top center;
+        //background-size: 217% auto;
+      }
+    }
+    &.layer5 {
+      span {
+        background-image: url("../images/hills-02.png");
+        animation: animatedB 12s infinite linear;
+      }
+    }
+    &.layer6 {
+      span {
+        background-image: url("../images/hills-01.png");
+        animation: animatedB 7s infinite linear;
+        //background-size: 230% auto;
+      }
+    }
     span {
       height: 100%;
       display: block;
-      background-image: url("../images/mountainLayer1.png");
+
       background-size: contain;
       width: 1920px;
       background-size: 200% auto;
       background-position: bottom -153px left 0;
       background-repeat: repeat-x;
       animation: animatedB 12s infinite linear;
-      transition: all;
+      // transition: all;
+      // transition-delay: 12s;
+      // transition-duration: 12s;
+      // transition-timing-function: linear;
+      // animation: animatedB;
 
       @keyframes animatedB {
         from {
@@ -46,7 +105,7 @@
         background-position: bottom -153px left 0;
       }
       100% {
-        background-position: bottom -153px left 200%;
+        background-position: bottom -153px right 200%;
       }
     }
 
