@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react"
 import Matter from "matter-js";
 import svgimg1 from"../assets/images/down-arrow-svgrepo-com.svg";
 import svgimg2 from"../assets/images/svg1.svg";
+import cartoon2 from "../assets/images/cartoon2.png";
+
 // import Snap from 'snapsvg-cjs'
 // import intersect from "path-intersection";
 // import styled from 'styled-components'
@@ -42,52 +44,69 @@ const Options  ={isStatic : true, render: {
   strokeStyle: 'blue',
   lineWidth: 3
 }}
-const bodyProps = [{posX:400,posY:0, width : 800, height:30},{posX:300,posY:10, width : 600, height:30}]
+const bodyProps = [{posX:400,posY:10, width : 800, height:30},{posX:0,posY:10, width : 600, height:30}]
 const staticBodies = bodyProps.map(el=>{
   return Bodies.rectangle(el.posX, el.posY, el.width, el.height, Options)
 })
-var bird = Bodies.circle(300, 400, 10, { isStatic : false,restitution: 0.5})
-let svgs = ["../assets/images/down-arrow-svgrepo-com.svg" , "../assets/images/svg1.svg"];
+var bird = Bodies.rectangle(300, 400,110,45, { isStatic : false,restitution: 0.5, render: {
+  sprite: {
+      texture: cartoon2
+  }
+}})
+var bird2 = Bodies.rectangle(300, 100,110,45, { isStatic : false,restitution: 0.5, render: {
+  sprite: {
+      texture: cartoon2
+  }
+}})
+let svgs = [svgimg1 , svgimg2];
 if (typeof fetch !== 'undefined') {
-var select = function(root, selector) {
-  return Array.prototype.slice.call(root.querySelectorAll(selector));
-};
-}
-var loadSvg = function(url) {
-  return fetch(url)
-      .then(function(response) { return response.text(); })
-      .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
-};
-var vertexSets = []
-svgs.forEach(function(path, i) { 
-  loadSvg(path).then(function(root) {
-      var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
-      console.log("root",root , path)
+  var select = function(root, selector) {
+      return Array.prototype.slice.call(root.querySelectorAll(selector));
+  };
 
-      var vertexSets = select(root, 'path')
-          .map(function(path) { return Vertices.scale(Svg.pathToVertices(path, 30), 0.4, 0.4); });
-      World.add(engine.world, Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
-          render: {
-              fillStyle: color,
-              strokeStyle: color,
-              lineWidth: 1
-          }
-      }, true));
+  var loadSvg = function(url) {
+      return fetch(url)
+          .then(function(response) { return response.text(); })
+          .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
+  };
 
-      // var v = Bodies.fromVertices(100+(i*80), 80, Svg.pathToVertices(path, 20), {
-      //   render: {
-      //     fillStyle: color,
-      //     strokeStyle: color
-      //   }
-      // }, true);
-      // console.log("v===",v)
+  svgs.forEach(function(path, i) { 
+      loadSvg(path).then(function(root) {
+          var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
 
-      // vertexSets.push(v);
-      // World.add(engine.world, vertexSets);
+          // var vertexSets = select(root, 'path')
+          //     .map(function(path) { 
+          //       console.log("path",path)
+          //       return Vertices.scale(Svg.pathToVertices(path, 10), 0.4, 0.4); 
+          //     });
+
+          // World.add(world, Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
+          //     render: {
+          //         fillStyle: color,
+          //         strokeStyle: color,
+          //         lineWidth: 1
+          //     }
+          // }, true));
+      });
   });
-});
+
+  // loadSvg('./svg/svg.svg').then(function(root) {
+  //     var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
+      
+  //     var vertexSets = select(root, 'path')
+  //         .map(function(path) { return Svg.pathToVertices(path, 30); });
+
+  //     World.add(world, Bodies.fromVertices(400, 80, vertexSets, {
+  //         render: {
+  //             fillStyle: color,
+  //             strokeStyle: color,
+  //             lineWidth: 1
+  //         }
+  //     }, true));
+  // });
+}
 World.add(engine.world, staticBodies);
-World.add(engine.world, [bird]);
+World.add(engine.world, [bird ,bird2]);
     Engine.run(engine);
     Render.run(render);
 /// mouse events
