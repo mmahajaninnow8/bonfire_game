@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Switch, BrowserRouter, Redirect } from "react-router-dom";
 const Game = React.lazy(() => import("../pages/GameScreen"));
 const PageNotFound = React.lazy(() => import("../pages/pageNotFound"));
+const Matter = React.lazy(() => import("../pages/matter"));
 
 const PublicRoute = ({ component: Component, ...rest }) => {
   return <Route path={rest.path} component={Component} />;
@@ -22,6 +23,7 @@ const Routes = (props) => {
       <Suspense fallback={loading()}>
         <Switch>
           <PublicRoute exact path="/" component={Game} />
+          <PublicRoute exact path="/matter" component={Matter} />
           <NotFound />
         </Switch>
       </Suspense>
