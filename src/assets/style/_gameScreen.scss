@@ -28,7 +28,7 @@
     &.layer2 {
       span {
         background-image: url("../images/hills-05.png");
-        animation: animatedB 30s infinite linear;
+        animation: animatedB 50s infinite linear;
         // background-size: 100% 700px;
         // background-position: top center;
         //opacity: 0.8;
@@ -37,7 +37,7 @@
     &.layer3 {
       span {
         background-image: url("../images/hills-04.png");
-        animation: animatedB 50s infinite linear;
+        animation: animatedB 30s infinite linear;
         // background-size: 200% 500px;
         // opacity: 0.9;
       }
@@ -146,7 +146,7 @@
         left: 0;
       }
       .mountain {
-        animation: leftRight linear 40s infinite;
+        animation: leftRight linear 5s infinite;
       }
       .aeroplane {
         animation: leftRight linear 10s infinite;
