@@ -245,5 +245,8 @@
   .contact-txt {
     text-align: center;
     font-weight: 400;
+    @media screen and (max-width: 767px) {
+      font-size: 15px;
+    }
   }
 }

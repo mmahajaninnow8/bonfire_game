@@ -179,7 +179,7 @@ function GameScreen () {
                     <h3 className="cartoon-txt">Coming Soon !</h3>
                   </div>
                 </Col>
-              </Row>c
+              </Row>
             </Container>
           </div>
           <h4 className="contact-txt">
