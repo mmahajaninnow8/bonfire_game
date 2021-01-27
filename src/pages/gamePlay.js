@@ -5,14 +5,16 @@ import Header from "../components/Header";
 import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import bird from "../assets/images/bird.png";
-import svgimg1 from"../assets/images/down-arrow-svgrepo-com.svg";
+import svgimg1 from"../assets/images/supermanOutline.svg";
 import svgimg2 from"../assets/images/svg1.svg";
 import {makeBodyFromSVG} from '../utilities/utility'
+import supermanImage from"../assets/images/man.png";
+
 // import man from "../assets/images/birdsvg.svg";
 
 const GamePlay = () => {
   let engine;
-  let superman,helicopter,initialPos;
+  let superman,helicopter,initialPos,mountains , initialPosOfMountain;
   let World;
   const scene = useRef();
   useEffect(()=>{
@@ -49,7 +51,7 @@ const GamePlay = () => {
         width:scene.current.clientWidth,
         height: scene.current.clientHeight,
         wireframes: false,
-        background:"rgba(#fff, 0.8)",
+        // background:"rgba(#fff, 0.8)",
         // border : 10px solid red
       }
     });
@@ -68,6 +70,10 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
     y: 0
   }
   console.log("helicopter",  v)
+  if(mountains){
+    Matter.Body.setVelocity(mountains, v)
+
+  }
   if(helicopter){
     Matter.Body.setVelocity(helicopter, v)
     var p = helicopter.position
@@ -108,16 +114,21 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
     console.log("wimdow.height ===",window.screen)
     let world = engine.world;
     initialPos = {x : scene.current.clientWidth , y : 100}
+     initialPosOfMountain = {x : scene.current.clientWidth , y : scene.current.clientHeight}
     // initialPos = {x : 400 , y : 100}
-    helicopter = await makeBodyFromSVG(svgimg1, initialPos)
-    World.add(world, helicopter);
+  //   helicopter = await makeBodyFromSVG(svgimg1, initialPos)
+  //   World.add(world, helicopter);
+  //  console.log("svgimg1svgimg1svgimg1=")
+  //   mountains = await makeBodyFromSVG(svgimg1, initialPosOfMountain )
+  //   World.add(world, mountains);
   }
 
   const makeBodies = async ()=>{
   World = Matter.World;
    let world = engine.world;
    const pos = {x:100, y:200}
-    superman= await makeBodyFromSVG(svgimg1, pos)
+   console.log("supermanImage===",supermanImage)
+    superman= await makeBodyFromSVG(svgimg1, pos ,supermanImage )
    console.log("bodybody=",superman)
    World.add(world, superman);
 
