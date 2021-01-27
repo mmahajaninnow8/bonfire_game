@@ -85,35 +85,41 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
 })
 
 
-let svgs = [svgimg1 , svgimg2];
-if (typeof fetch !== 'undefined') {
-  var select = function(root, selector) {
+let svgs = [svgimg1 ];
+  if (typeof fetch !== 'undefined') {
+    var select = function (root, selector) {
       return Array.prototype.slice.call(root.querySelectorAll(selector));
-  };
+    };
 
-  var loadSvg = function(url) {
+    var loadSvg = function (url) {
       return fetch(url)
-          .then(function(response) { return response.text(); })
-          .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
-  };
+        .then(function (response) { return response.text(); })
+        .then(function (raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
+    };
+    svgs.forEach(function (path, i) {
+      loadSvg(path).then(function (root) {
+        console.log("root", root)
+        var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
+        const vertexSets = select(root, 'path')
+          .map(function (path) {
 
-  svgs.forEach(function(path, i) { 
-      loadSvg(path).then(function(root) {
-          var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
-
+            return Vertices.scale(Svg.pathToVertices(path, 30), 0.4, 0.4);;
+          });
+        World.add(world, Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
+          render: {
+            fillStyle: color,
+            strokeStyle: color,
+            lineWidth: 1
+          }
+        }, true));
       });
-  });
-
- 
-}
-
+    });
+  }
 
    World.add(engine.world, staticBodies);
    World.add(engine.world, [bird,plane,]);
        Engine.run(engine);
        Render.run(render);
-
-
 
 },[]);
 
