@@ -6,7 +6,9 @@ import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import bird from "../assets/images/bird.png";
 import svgimg1 from"../assets/images/supermanOutline.svg";
-import svgimg2 from"../assets/images/svg1.svg";
+import svgimg2 from"../assets/images/bird.svg";
+import svgimg3 from"../assets/images/hills.png";
+import mountainPath from"../assets/images/hills.svg";
 import {makeBodyFromSVG} from '../utilities/utility'
 import supermanImage from"../assets/images/man.png";
 
@@ -51,7 +53,7 @@ const GamePlay = () => {
         width:scene.current.clientWidth,
         height: scene.current.clientHeight,
         wireframes: false,
-        // background:"rgba(#fff, 0.8)",
+        background:"rgba(#fff, 0.8)",
         // border : 10px solid red
       }
     });
@@ -72,7 +74,15 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
   console.log("helicopter",  v)
   if(mountains){
     Matter.Body.setVelocity(mountains, v)
-
+    var p = mountains.position
+    if(p.x < 0){
+      direction = 0
+      const y = Math.floor(Math.random()*200) +100
+       Matter.Body.setPosition(mountains,{x :initialPos.x, y:scene.current.clientHeight-180})
+    }else {
+      direction = 1
+    }
+    // 
   }
   if(helicopter){
     Matter.Body.setVelocity(helicopter, v)
@@ -84,14 +94,10 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
     }else {
       direction = 1
     }
-    var collision = Matter.SAT.collides(superman, helicopter); if (collision.collided) { 
-      alert("collide")
-      }
+    // var collision = Matter.SAT.collides(superman, helicopter); if (collision.collided) { 
+    //   alert("collide")
+    //   }
   }
-
-
-  
-
 })
 
 
@@ -114,13 +120,13 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
     console.log("wimdow.height ===",window.screen)
     let world = engine.world;
     initialPos = {x : scene.current.clientWidth , y : 100}
-     initialPosOfMountain = {x : scene.current.clientWidth , y : scene.current.clientHeight}
+     initialPosOfMountain = {x : scene.current.clientWidth -500 , y : scene.current.clientHeight-180}
     // initialPos = {x : 400 , y : 100}
-  //   helicopter = await makeBodyFromSVG(svgimg1, initialPos)
-  //   World.add(world, helicopter);
-  //  console.log("svgimg1svgimg1svgimg1=")
-  //   mountains = await makeBodyFromSVG(svgimg1, initialPosOfMountain )
-  //   World.add(world, mountains);
+    helicopter = await makeBodyFromSVG(svgimg2, initialPos ,bird)
+    World.add(world, helicopter);
+   console.log("svgimg1svgimg1svgimg1=")
+    mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain ,svgimg3  )
+    World.add(world, mountains);
   }
 
   const makeBodies = async ()=>{

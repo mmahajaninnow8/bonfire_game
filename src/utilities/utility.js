@@ -18,12 +18,11 @@ export const makeBodyFromSVG  = async (svg,pos ,img)=>{
       await asyncForEach(svgs,async function (path, i){
      const root =  await loadSvg(path)
      const vertexSets = select(root, 'path').map(function (path) {
-              return Vertices.scale(Svg.pathToVertices(path, 30), 0.1, 0.1);
+              return Vertices.scale(Svg.pathToVertices(path, 100), 0.1, 0.1);
             });
       body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{render: {
-                fillStyle: "yellow",
-                strokeStyle: "yellow",
-                lineWidth: 1,
+                // fillStyle: "yellow",
+                // lineWidth: 1,
                 sprite: {
                   texture: img
               }
