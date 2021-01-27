@@ -2,7 +2,7 @@ import Matter from "matter-js";
 var Vertices = Matter.Vertices,
 Svg = Matter.Svg,
 Bodies = Matter.Bodies;
-export const makeBodyFromSVG  = async (svg,pos ,img)=>{
+export const makeBodyFromSVG  = async (svg,pos ,img,scale)=>{
   console.log("img",img)
   let svgs = [svg],body;
   if (typeof fetch !== 'undefined') {
@@ -18,10 +18,11 @@ export const makeBodyFromSVG  = async (svg,pos ,img)=>{
       await asyncForEach(svgs,async function (path, i){
      const root =  await loadSvg(path)
      const vertexSets = select(root, 'path').map(function (path) {
-              return Vertices.scale(Svg.pathToVertices(path, 100), 0.1, 0.1);
+       const scaleFactor = scale ? scale :{x:0.1,y:0.1}
+              return Vertices.scale(Svg.pathToVertices(path, 100),scaleFactor.x,scaleFactor.y);
             });
       body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{render: {
-                // fillStyle: "yellow",
+                fillStyle: "none",
                 // lineWidth: 1,
                 sprite: {
                   texture: img
