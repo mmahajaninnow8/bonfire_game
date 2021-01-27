@@ -5,17 +5,34 @@ import Header from "../components/Header";
 import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import bird from "../assets/images/bird.png";
+import svgimg1 from"../assets/images/down-arrow-svgrepo-com.svg";
+import svgimg2 from"../assets/images/svg1.svg";
+
+// import man from "../assets/images/birdsvg.svg";
 
 const GamePlay = () => {
+  let engine;
   const scene = useRef();
   useEffect(()=>{
+    window.addEventListener('keydown', (e) => {
+      var key_code=e.keyCode
+      console.log("key_codekey_code=",key_code)
+             switch(key_code){
+               case 38: //Up arrow key
+                 moveUp();
+                 break;
+               case 40: //down arrow key
+                 moveDown();
+                 break;
+             }
+     });
     // egine variables
     var Engine = Matter.Engine,
     Render = Matter.Render;
     
     
     /// create engine and make gravity off
-    var engine = Engine.create({
+     engine = Engine.create({
       // positionIterations: 20
     });
 
@@ -42,11 +59,55 @@ const GamePlay = () => {
     Render.run(render);
   },[])
 
+  const moveUp =()=>{
+    const body = Matter.Body
+    // body.translate(svgimg1,{ x :0, y:-20 })
+    
+  }
+  
+  const  moveDown =()=> {
+    const body = Matter.Body
+    // body.translate(svgimg1,{ x :0, y:+20 })
+  }
+
   const makeBodies = ()=>{
    var Bodies = Matter.Bodies,
     Vertices = Matter.Vertices,
     Svg = Matter.Svg,
-    World = Matter.World;
+    World = Matter.World,
+    Common = Matter.Common;
+    let world = engine.world;
+    let svgs = [svgimg1];
+    if (typeof fetch !== 'undefined') {
+      var select = function (root, selector) {
+        return Array.prototype.slice.call(root.querySelectorAll(selector));
+      };
+  
+      var loadSvg = function (url) {
+        return fetch(url)
+          .then(function (response) { return response.text(); })
+          .then(function (raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
+      };
+      svgs.forEach(function (path, i) {
+        loadSvg(path).then(function (root) {
+          console.log("root", root)
+          var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
+          const vertexSets = select(root, 'path')
+            .map(function (path) {
+  
+              return Vertices.scale(Svg.pathToVertices(path, 30), 0.4, 0.4);;
+            });
+          World.add(world, Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
+            render: {
+              fillStyle: color,
+              strokeStyle: color,
+              lineWidth: 1
+            }
+          }, true));
+        });
+      });
+    }
+
   }
 
   return (
