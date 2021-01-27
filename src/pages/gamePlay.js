@@ -7,11 +7,13 @@ import cartoon from "../assets/images/cartoon1.png";
 import bird from "../assets/images/bird.png";
 import svgimg1 from"../assets/images/down-arrow-svgrepo-com.svg";
 import svgimg2 from"../assets/images/svg1.svg";
-
+import {makeBodyFromSVG} from '../utilities/utility'
 // import man from "../assets/images/birdsvg.svg";
 
 const GamePlay = () => {
   let engine;
+  let superman,helicopter,initialPos;
+  let World;
   const scene = useRef();
   useEffect(()=>{
     window.addEventListener('keydown', (e) => {
@@ -52,8 +54,34 @@ const GamePlay = () => {
     });
 
    /// make bodies 
-
    makeBodies()
+   /// hurdles 
+   makeHurdles()
+
+// updates physics
+let direction = 1;
+// Matter.Events.on(engine, 'beforeUpdate', function (ev) {
+//   const val = Math.floor(Math.random()*8) +2; 
+//   var v = {
+//     x: direction*-val,
+//     y: 0
+//   }
+//   Matter.Body.setVelocity(helicopter, v)
+//   var p = helicopter.position
+//   if(p.x < 0){
+//     direction = 0
+//     const y = Math.floor(Math.random()*200) +100
+//     Matter.Body.setPosition(helicopter,{x :initialPos.x, y:y})
+//   }else {
+//     direction = 1
+//   }
+
+//   // var collision = Matter.SAT.collides(bird, helicopter); if (collision.collided) { 
+//   //   alert("collide")
+//   //   }
+
+// })
+
 
     Engine.run(engine);
     Render.run(render);
@@ -61,52 +89,70 @@ const GamePlay = () => {
 
   const moveUp =()=>{
     const body = Matter.Body
-    // body.translate(svgimg1,{ x :0, y:-20 })
+    body.translate(superman,{ x :0, y:-20 })
     
   }
   
   const  moveDown =()=> {
     const body = Matter.Body
-    // body.translate(svgimg1,{ x :0, y:+20 })
+    body.translate(superman,{ x :0, y:+20 })
   }
 
-  const makeBodies = ()=>{
-   var Bodies = Matter.Bodies,
-    Vertices = Matter.Vertices,
-    Svg = Matter.Svg,
-    World = Matter.World,
-    Common = Matter.Common;
+  const makeHurdles = async ()=>{
+    console.log("wimdow.height ===",window.screen)
     let world = engine.world;
-    let svgs = [svgimg1];
-    if (typeof fetch !== 'undefined') {
-      var select = function (root, selector) {
-        return Array.prototype.slice.call(root.querySelectorAll(selector));
-      };
+    // initialPos = {x : scene.current.width , y : 100}
+    initialPos = {x : 400 , y : 100}
+    helicopter = await makeBodyFromSVG(svgimg2, initialPos)
+    World.add(world, helicopter);
+  }
+
+  const makeBodies = async ()=>{
+  World = Matter.World;
+   let world = engine.world;
+   const pos = {x:100, y:200}
+    superman= await makeBodyFromSVG(svgimg1, pos)
+   console.log("bodybody=",superman)
+   World.add(world, superman);
+  //  var Bodies = Matter.Bodies,
+  //   Vertices = Matter.Vertices,
+  //   Svg = Matter.Svg,
+  //   World = Matter.World,
+  //   Common = Matter.Common;
+  //   let world = engine.world;
+  //   let svgs = [svgimg1];
+    
+    // if (typeof fetch !== 'undefined') {
+    //   var select = function (root, selector) {
+    //     return Array.prototype.slice.call(root.querySelectorAll(selector));
+    //   };
   
-      var loadSvg = function (url) {
-        return fetch(url)
-          .then(function (response) { return response.text(); })
-          .then(function (raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
-      };
-      svgs.forEach(function (path, i) {
-        loadSvg(path).then(function (root) {
-          console.log("root", root)
-          var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
-          const vertexSets = select(root, 'path')
-            .map(function (path) {
+    //   var loadSvg = function (url) {
+    //     return fetch(url)
+    //       .then(function (response) { return response.text(); })
+    //       .then(function (raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
+    //   };
+    //   svgs.forEach(function (path, i) {
+    //     loadSvg(path).then(function (root) {
+    //       console.log("root", root)
+    //       var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
+    //       const vertexSets = select(root, 'path')
+    //         .map(function (path) {
   
-              return Vertices.scale(Svg.pathToVertices(path, 30), 0.4, 0.4);;
-            });
-          World.add(world, Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
-            render: {
-              fillStyle: color,
-              strokeStyle: color,
-              lineWidth: 1
-            }
-          }, true));
-        });
-      });
-    }
+    //           return Vertices.scale(Svg.pathToVertices(path, 30), 0.4, 0.4);;
+    //         });
+
+    //         superman = Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
+    //           render: {
+    //             fillStyle: color,
+    //             strokeStyle: color,
+    //             lineWidth: 1
+    //           }
+    //         }, true)
+    //       World.add(world, superman);
+    //     });
+    //   });
+    // }
 
   }
 
