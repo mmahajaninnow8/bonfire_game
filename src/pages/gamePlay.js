@@ -5,13 +5,14 @@ import Header from "../components/Header";
 import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import birdImg from "../assets/images/bird.png";
-import supermanPath from "../assets/images/supermanOutline.svg";
-import birdPath from "../assets/images/bird.svg";
-import svgimg3 from "../assets/images/hills.png";
-import mountainPath from "../assets/images/hills.svg";
-import palnepath from "../assets/images/plane.svg";
-import { makeBodyFromSVG, addSpriteBody } from '../utilities/utility'
-import supermanImage from "../assets/images/man.png";
+import supermanPath from"../assets/images/supermanOutline.svg";
+import birdPath from"../assets/images/bird6.svg";
+import svgimg3 from"../assets/images/hills.png";
+import mountainPath from"../assets/images/hills.svg";
+import palnepath from"../assets/images/planePath.svg";
+import {makeBodyFromSVG,addSpriteBody} from '../utilities/utility'
+import supermanImage from"../assets/images/man.png";
+import planeImage from"../assets/images/plane.png";
 
 // import man from "../assets/images/birdsvg.svg";
 let inteval = null;
@@ -27,7 +28,7 @@ const GamePlay = () => {
   const updateScore = () => {
     inteval = setInterval(() => {
       setScore(prev => prev + 1)
-    }, 1000);
+    }, 100);
   }
   useEffect(()=>{
     if(score>prevHighscore){
@@ -72,7 +73,7 @@ const GamePlay = () => {
         width: scene.current.clientWidth,
         height: scene.current.clientHeight,
         wireframes: false,
-        // background:"rgba(#fff, 0.8)",
+        background:"rgba(#fff, 0.8)",
         // border : 10px solid red
       }
     });
@@ -172,20 +173,20 @@ const GamePlay = () => {
   }
   const handlePlane = async () => {
     initialPosPlane = { x: scene.current.clientWidth + scene.current.clientWidth * 0.2, y: scene.current.clientHeight * 0.1 }
-    let palne = await makeBodyFromSVG(palnepath, initialPosPlane)
+    let palne = await makeBodyFromSVG(palnepath, initialPosPlane , planeImage)
     return palne
   }
 
   const handleBird = async () => {
     initialPosBird = { x: scene.current.clientWidth, y: scene.current.clientHeight * 0.2 }
-    let bird = await makeBodyFromSVG(birdPath, initialPosBird)
+    let bird = await makeBodyFromSVG(birdPath, initialPosBird ,birdImg)
     return bird
   }
   const handleMountains = async () => {
-    initialPosOfMountain = { x: scene.current.clientWidth + scene.current.clientWidth * 0.3, y: scene.current.clientHeight - scene.current.clientHeight * 0.1 }
+    initialPosOfMountain = { x: scene.current.clientWidth + scene.current.clientWidth * 0.3, y: scene.current.clientHeight - scene.current.clientHeight * 0.25 }
     // svgimg3
-    const mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain, svgimg3, { x: 0.4, y: 0.4 })
-    return mountains
+  const  mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain ,svgimg3, {x:0.25,y:0.25})
+  return mountains
   }
 
   const makeBodies = async () => {
