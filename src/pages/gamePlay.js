@@ -6,7 +6,7 @@ import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import birdImg from "../assets/images/bird.png";
 import supermanPath from"../assets/images/supermanOutline.svg";
-import birdPath from"../assets/images/bird.svg";
+import birdPath from"../assets/images/bird(3).svg";
 import svgimg3 from"../assets/images/hills.png";
 import mountainPath from"../assets/images/hills.svg";
 import {makeBodyFromSVG,addSpriteBody} from '../utilities/utility'
@@ -157,8 +157,7 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
    World = Matter.World;
    let world = engine.world;
    const pos = {x:100, y:200}
-   superman= await makeBodyFromSVG(supermanPath, pos,supermanImage)
-  
+   superman= await makeBodyFromSVG(supermanPath, pos)
    World.add(world, [superman]);
   }
 
