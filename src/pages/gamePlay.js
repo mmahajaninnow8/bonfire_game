@@ -6,9 +6,10 @@ import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import birdImg from "../assets/images/bird.png";
 import supermanPath from"../assets/images/supermanOutline.svg";
-import birdPath from"../assets/images/bird(3).svg";
+import birdPath from"../assets/images/bird.svg";
 import svgimg3 from"../assets/images/hills.png";
 import mountainPath from"../assets/images/hills.svg";
+import palnepath from"../assets/images/plane.svg";
 import {makeBodyFromSVG,addSpriteBody} from '../utilities/utility'
 import supermanImage from"../assets/images/man.png";
 
@@ -16,7 +17,7 @@ import supermanImage from"../assets/images/man.png";
 
 const GamePlay = () => {
   let engine;
-  let superman,bird,initialPosBird,mountains , initialPosOfMountain,compoundBodyA;
+  let superman,bird,initialPosBird,mountains,initialPosOfMountain,plane,initialPosPlane;
   let World;
   const scene = useRef();
   useEffect(()=>{
@@ -73,21 +74,35 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
   }
 
   if(mountains){
-    const dir = addMovementToHurdles(mountains,v,initialPosOfMountain,true)
+    const dir = addMovementToHurdles(mountains,v,initialPosOfMountain)
     direction = dir
     let collision = Matter.SAT.collides(superman, mountains);
      if (collision && collision.collided) { 
       alert("collide")
       }
   }
+  if(plane){
+    const height= scene.current.clientHeight
+    const width = scene.current.clientWidth
+    const randomY = Math.floor(Math.random()* height * 0.2) + height * 0.1
+    const dir = addMovementToHurdles(plane,v,initialPosPlane,randomY)
+    direction = dir
+    let collision = Matter.SAT.collides(superman, plane);
+    if (collision && collision.collided) { 
+     alert("collide")
+     }
+  }
   if(bird){
-    const dir = addMovementToHurdles(bird,v,initialPosBird)
+    const height= scene.current.clientHeight
+    const width = scene.current.clientWidth
+    const randomY = Math.floor(Math.random()* height * 0.3) + height * 0.2
+    const dir = addMovementToHurdles(bird,v,initialPosBird,randomY)
      direction = dir
      let collision = Matter.SAT.collides(superman, bird);
      if (collision && collision.collided) { 
       alert("collide")
       }
-  }
+  } 
 })
     Engine.run(engine);
     Render.run(render);
@@ -97,10 +112,12 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
 
 const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
   Matter.Body.setVelocity(body, v)
-  var p = body.position
-  if(p.x < 0){
+  const p = body.position
+  const endPoint = body.bounds.max.x - body.bounds.min.x
+  // console.log("endPointendPoint=",endPoint)
+  if(p.x < -endPoint){
    const direction = 0
-    const y = !isRandomY ? Math.floor(Math.random()*200) +100 :initialPos.y
+    const y = isRandomY ? isRandomY :initialPos.y
      Matter.Body.setPosition(body,{x :initialPos.x, y:y})
      return direction
   }else {
@@ -108,38 +125,29 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
    return direction
   }
 }
-
   const moveUp =()=>{
     const body = Matter.Body
-    body.translate(superman,{ x :0, y:-20 })
-    
+    body.translate(superman,{ x :0, y:-20 }) 
   }
-  
   const  moveDown =()=> {
     const body = Matter.Body
     body.translate(superman,{ x :0, y:+20 })
   }
-
+  
   const makeHurdles = async ()=>{
     let world = engine.world;
     /// bird
    bird = await handleBird()
-  
-
+  //// plane
+  plane = await handlePlane()
    /// mountains
-  //  mountains = await handleMountains()
-  //  mountains.parts.forEach((element , i) => {
-  //   if( i !==1 ){
-  //   element.render.sprite.texture = null;
-  //   }
-  // });
-    
-    // console.log("mountains=",mountains.position)
-    // const width = mountains && (mountains.bounds.max.x - mountains.bounds.min.x)
-    // const height = mountains && (mountains.bounds.max.y - mountains.bounds.min.y)
-    // console.log("widthwidthwidth=",width,height)
-    // Matter.Body.setPosition(mountains,{x :mountains.position.x, y:mountains.position-height*0.5})
-    World.add(world, [bird]);
+   mountains = await handleMountains()
+    World.add(world, [bird,plane,mountains]);
+  }
+  const handlePlane = async ()=>{
+    initialPosPlane = {x : scene.current.clientWidth + scene.current.clientWidth*0.2 , y :scene.current.clientHeight * 0.1 }
+    let palne = await makeBodyFromSVG(palnepath, initialPosPlane)
+    return palne
   }
 
   const handleBird =async ()=>{
@@ -148,7 +156,8 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
     return bird
   }
   const handleMountains = async()=>{
-    initialPosOfMountain = {x : scene.current.clientWidth +  scene.current.clientWidth * 0.3, y : scene.current.clientHeight - scene.current.clientHeight*0.18}
+    initialPosOfMountain = {x : scene.current.clientWidth +  scene.current.clientWidth * 0.3, y : scene.current.clientHeight - scene.current.clientHeight*0.1}
+    // svgimg3
   const  mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain ,svgimg3, {x:0.4,y:0.4})
   return mountains
   }
@@ -157,7 +166,7 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
    World = Matter.World;
    let world = engine.world;
    const pos = {x:100, y:200}
-   superman= await makeBodyFromSVG(supermanPath, pos)
+   superman= await makeBodyFromSVG(supermanPath, pos,supermanImage)
    World.add(world, [superman]);
   }
 

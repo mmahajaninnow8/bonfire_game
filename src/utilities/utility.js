@@ -18,7 +18,7 @@ export const makeBodyFromSVG  = async (svg,pos,img,scale)=>{
       await asyncForEach(svgs,async function (path, i){
      const root =  await loadSvg(path)
      const vertexSets = select(root, 'path').map(function (path) {
-       const scaleFactor = scale ? scale :{x:0.08,y:0.08}
+       const scaleFactor = scale ? scale :{x:0.07,y:0.07}
               return Vertices.scale(Svg.pathToVertices(path, 100),scaleFactor.x,scaleFactor.y);
             });
        body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{render: {
