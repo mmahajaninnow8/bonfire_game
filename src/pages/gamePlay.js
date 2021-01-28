@@ -6,7 +6,7 @@ import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import birdImg from "../assets/images/bird.png";
 import supermanPath from"../assets/images/supermanOutline.svg";
-import birdPath from"../assets/images/bird.svg";
+import birdPath from"../assets/images/birdPath.svg";
 import svgimg3 from"../assets/images/hills.png";
 import mountainPath from"../assets/images/hills.svg";
 import {makeBodyFromSVG} from '../utilities/utility'
@@ -16,7 +16,7 @@ import supermanImage from"../assets/images/man.png";
 
 const GamePlay = () => {
   let engine;
-  let superman,bird,initialPosBird,mountains , initialPosOfMountain;
+  let superman,bird,initialPosBird,mountains , initialPosOfMountain , supermanBlock ,mountainBlock ,birdBlock;
   let World;
   const scene = useRef();
   useEffect(()=>{
@@ -75,18 +75,30 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
   if(mountains){
     const dir = addMovementToHurdles(mountains,v,initialPosOfMountain,true)
     direction = dir
-    let collision = Matter.SAT.collides(superman, mountains);
-     if (collision && collision.collided) { 
-      alert("collide")
-      }
+    // let collision = Matter.SAT.collides(superman, mountains);
+    //  if (collision && collision.collided) { 
+    //   alert("collide")
+    //   }
   }
   if(bird){
     const dir = addMovementToHurdles(bird,v,initialPosBird)
      direction = dir
-     let collision = Matter.SAT.collides(superman, bird);
-     if (collision && collision.collided) { 
-      alert("collide")
-      }
+    //  let collision = Matter.SAT.collides(superman, bird);
+    //  if (collision && collision.collided) { 
+    //   alert("collide")
+    //   }
+  }
+  if(birdBlock){
+    const dir = addMovementToHurdles(birdBlock,v,initialPosBird)
+     direction = dir
+    //  let collision = Matter.SAT.collides(superman, bird);
+    //  if (collision && collision.collided) { 
+    //   alert("collide")
+    //   }
+  }
+  if(mountainBlock){
+    const dir = addMovementToHurdles(mountainBlock,v,initialPosOfMountain , true)
+    direction = dir
   }
 })
     Engine.run(engine);
@@ -112,32 +124,46 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
   const moveUp =()=>{
     const body = Matter.Body
     body.translate(superman,{ x :0, y:-20 })
+    body.translate(supermanBlock,{ x :0, y:-20 })
     
   }
   
   const  moveDown =()=> {
     const body = Matter.Body
     body.translate(superman,{ x :0, y:+20 })
+    body.translate(supermanBlock,{ x :0, y:+20 })
   }
 
   const makeHurdles = async ()=>{
     let world = engine.world;
     /// bird
    bird = await handleBird()
-   bird.parts.forEach((element , i) => {
-    if( i !==1 ){
-    element.render.sprite.texture = null;
-    }
-  });
-
    /// mountains
    mountains = await handleMountains()
-   mountains.parts.forEach((element , i) => {
-    if( i !==1 ){
-    element.render.sprite.texture = null;
+   mountainBlock = Matter.Bodies.rectangle(initialPosOfMountain.x, initialPosOfMountain.y, 10, 10, {
+    collisionFilter: {
+      mask: 0x0002
+  },
+    render: {
+
+        sprite: {
+            texture: svgimg3
+        }
     }
-  });
-    
+});
+birdBlock = Matter.Bodies.rectangle(initialPosBird.x, initialPosBird.y, 10, 10, {
+    collisionFilter: {
+      mask: 0x0002
+  },
+    render: {
+
+        sprite: {
+            texture: birdImg
+        }
+    }
+});
+    World.add(world, mountainBlock);
+    World.add(world, birdBlock);
     console.log("mountains=",mountains.position)
     const width = mountains && (mountains.bounds.max.x - mountains.bounds.min.x)
     const height = mountains && (mountains.bounds.max.y - mountains.bounds.min.y)
@@ -161,13 +187,24 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
   World = Matter.World;
    let world = engine.world;
    const pos = {x:100, y:200}
-  superman= await makeBodyFromSVG(supermanPath, pos ,supermanImage )
-  superman.parts.forEach((element , i) => {
-    if( i !==1 ){
-    element.render.sprite.texture = null;
+    supermanBlock = Matter.Bodies.rectangle(100, 200, 10, 10, {
+    isStatic: true,
+    collisionFilter: {
+      mask: 0x0002
+  },
+    render: {
+        sprite: {
+            texture: supermanImage,
+        }
     }
-  });
-  console.log("superman.partssuperman.parts=",superman.parts)
+}
+
+); 
+   World.add(world, supermanBlock);
+
+ superman = await makeBodyFromSVG(supermanPath, pos)
+  console.log("superman", superman)
+  // console.log("superman.partssuperman.parts=",Vertices.centreOfObject() )
    World.add(world, superman);
 
 
