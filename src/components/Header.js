@@ -8,7 +8,7 @@ function Header (props){
         <img src={logo}/>
         <div className="score">
        <h3>
-        HI <span>{score}</span> <span>{highScore}</span>
+        HI <span>{highScore}</span> <span>{score}</span> 
       </h3>
     </div>
       </div>

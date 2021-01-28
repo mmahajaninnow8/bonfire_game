@@ -30,11 +30,6 @@ const GamePlay = () => {
       setScore(prev => prev + 1)
     }, 100);
   }
-  useEffect(()=>{
-    if(score>prevHighscore){
-      setHighScore(highScore+1)
-    }
-  },[score])
   useEffect(() => {
 
     ///calculate score 
@@ -98,9 +93,10 @@ const GamePlay = () => {
         let collision = Matter.SAT.collides(superman, mountains);
         if (collision && collision.collided) {
           // localStorage.setItem('highScore',highScore)
-          console.log("highScorehighScore=",highScore)
-          localStorage.setItem('highScore',highScore)
+          localStorage.setItem('highScore',score)
+          setHighScore(score)
           clearInterval(inteval)
+          direction = 0
           alert("collide")
         }
       }
@@ -114,6 +110,7 @@ const GamePlay = () => {
         if (collision && collision.collided) {
           localStorage.setItem('highScore',highScore)
           clearInterval(inteval)
+          direction = 0
           alert("collide")
         }
       }
@@ -121,12 +118,13 @@ const GamePlay = () => {
         const height = scene.current.clientHeight
         const width = scene.current.clientWidth
         const randomY = Math.floor(Math.random() * height * 0.3) + height * 0.2
-        const dir = addMovementToHurdles(bird, v, initialPosBird, randomY)
+        const dir = addMovementToHurdles(bird, v, initialPosBird, superman.position.y)
         direction = dir
         let collision = Matter.SAT.collides(superman, bird);
         if (collision && collision.collided) {
           localStorage.setItem('highScore',highScore)
           clearInterval(inteval)
+          direction = 0
           alert("collide")
         }
       }
@@ -154,11 +152,15 @@ const GamePlay = () => {
   }
   const moveUp = () => {
     const body = Matter.Body
-    body.translate(superman, { x: 0, y: -20 })
+    if(superman.position.y >= 60){
+      body.translate(superman, { x: 0, y: -20 })
+    }
   }
   const moveDown = () => {
     const body = Matter.Body
-    body.translate(superman, { x: 0, y: +20 })
+    if(superman.position.y <= 460){
+      body.translate(superman, { x: 0, y: +20 })
+    }
   }
 
   const makeHurdles = async () => {
@@ -223,39 +225,7 @@ const GamePlay = () => {
       <div className="GameScreen-bg" ref={scene}>
         <Header score={score} highScore= {highScore}/>
 
-        {/* <div className="games-objecs">
-      <div>
-        <img className="superman"
-          style={{ left: "200px", position: "absolute", bottom: "300px" }}
-          src={cartoon}
-        />
-      </div>
-      <div>
-        <img className="aeroplane obstacle-move"
-          style={{
-            right: "40%",
-            top: "40%",
-            bottom: "10%",
-          }}
-          src={cartoon2}
-        />
-      </div>
-      <div>
-        <img className="bird obstacle-move"
-          style={{ right: "10%", bottom: "25%" }}
-          src={bird}
-        />
-      </div>
-      <img className="obstacle-move mountain"
-        style={{
-          right: "24%",
        
-          bottom: "0",
-          width: "20%",
-        }}
-        src={mountain}
-      />
-    </div> */}
       </div>
     </div>
   );
