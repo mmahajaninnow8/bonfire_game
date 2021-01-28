@@ -81,7 +81,7 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
     //   }
   }
   if(bird){
-    const dir = addMovementToHurdles(bird,v,initialPosBird)
+    const dir = addMovementToHurdles(bird,v,initialPosBird , true)
      direction = dir
     //  let collision = Matter.SAT.collides(superman, bird);
     //  if (collision && collision.collided) { 
@@ -89,7 +89,7 @@ Matter.Events.on(engine, 'beforeUpdate', function (ev) {
     //   }
   }
   if(birdBlock){
-    const dir = addMovementToHurdles(birdBlock,v,initialPosBird)
+    const dir = addMovementToHurdles(birdBlock,v,initialPosBird ,true)
      direction = dir
     //  let collision = Matter.SAT.collides(superman, bird);
     //  if (collision && collision.collided) { 
