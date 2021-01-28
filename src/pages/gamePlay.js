@@ -1,4 +1,4 @@
-import React,{useEffect,useRef} from 'react';
+import React,{useEffect,useRef , useState} from 'react';
 import Matter from "matter-js";
 import mountain from "../assets/images/mountain.png";
 import Header from "../components/Header";
@@ -6,10 +6,10 @@ import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import birdImg from "../assets/images/bird.png";
 import supermanPath from"../assets/images/supermanOutline.svg";
-import birdPath from"../assets/images/bird.svg";
+import birdPath from"../assets/images/bird6.svg";
 import svgimg3 from"../assets/images/hills.png";
 import mountainPath from"../assets/images/hills.svg";
-import palnepath from"../assets/images/plane.svg";
+import palnepath from"../assets/images/planePath.svg";
 import {makeBodyFromSVG,addSpriteBody} from '../utilities/utility'
 import supermanImage from"../assets/images/man.png";
 
@@ -158,7 +158,7 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
   const handleMountains = async()=>{
     initialPosOfMountain = {x : scene.current.clientWidth +  scene.current.clientWidth * 0.3, y : scene.current.clientHeight - scene.current.clientHeight*0.1}
     // svgimg3
-  const  mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain ,svgimg3, {x:0.4,y:0.4})
+  const  mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain ,svgimg3, {x:0.25,y:0.25})
   return mountains
   }
 
