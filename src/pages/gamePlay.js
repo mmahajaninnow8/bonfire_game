@@ -185,7 +185,7 @@ const GamePlay = () => {
     return bird
   }
   const handleMountains = async () => {
-    initialPosOfMountain = { x: scene.current.clientWidth + scene.current.clientWidth * 0.3, y: scene.current.clientHeight - scene.current.clientHeight * 0.25 }
+    initialPosOfMountain = { x: scene.current.clientWidth + scene.current.clientWidth * 0.3, y: scene.current.clientHeight - scene.current.clientHeight * 0.245 }
     // svgimg3
   const  mountains = await makeBodyFromSVG(mountainPath, initialPosOfMountain ,svgimg3, {x:0.25,y:0.25})
   return mountains
