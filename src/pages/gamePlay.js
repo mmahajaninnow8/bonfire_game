@@ -9,14 +9,14 @@ import supermanPath from"../assets/images/supermanOutline.svg";
 import birdPath from"../assets/images/bird.svg";
 import svgimg3 from"../assets/images/hills.png";
 import mountainPath from"../assets/images/hills.svg";
-import {makeBodyFromSVG} from '../utilities/utility'
+import {makeBodyFromSVG,addSpriteBody} from '../utilities/utility'
 import supermanImage from"../assets/images/man.png";
 
 // import man from "../assets/images/birdsvg.svg";
 
 const GamePlay = () => {
   let engine;
-  let superman,bird,initialPosBird,mountains , initialPosOfMountain;
+  let superman,bird,initialPosBird,mountains , initialPosOfMountain,compoundBodyA;
   let World;
   const scene = useRef();
   useEffect(()=>{
@@ -53,7 +53,7 @@ const GamePlay = () => {
         width:scene.current.clientWidth,
         height: scene.current.clientHeight,
         wireframes: false,
-        background:"rgba(#fff, 0.8)",
+        // background:"rgba(#fff, 0.8)",
         // border : 10px solid red
       }
     });
@@ -124,31 +124,27 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
     let world = engine.world;
     /// bird
    bird = await handleBird()
-   bird.parts.forEach((element , i) => {
-    if( i !==1 ){
-    element.render.sprite.texture = null;
-    }
-  });
+  
 
    /// mountains
-   mountains = await handleMountains()
-   mountains.parts.forEach((element , i) => {
-    if( i !==1 ){
-    element.render.sprite.texture = null;
-    }
-  });
+  //  mountains = await handleMountains()
+  //  mountains.parts.forEach((element , i) => {
+  //   if( i !==1 ){
+  //   element.render.sprite.texture = null;
+  //   }
+  // });
     
-    console.log("mountains=",mountains.position)
-    const width = mountains && (mountains.bounds.max.x - mountains.bounds.min.x)
-    const height = mountains && (mountains.bounds.max.y - mountains.bounds.min.y)
-    console.log("widthwidthwidth=",width,height)
+    // console.log("mountains=",mountains.position)
+    // const width = mountains && (mountains.bounds.max.x - mountains.bounds.min.x)
+    // const height = mountains && (mountains.bounds.max.y - mountains.bounds.min.y)
+    // console.log("widthwidthwidth=",width,height)
     // Matter.Body.setPosition(mountains,{x :mountains.position.x, y:mountains.position-height*0.5})
-    World.add(world, [bird,mountains]);
+    World.add(world, [bird]);
   }
 
   const handleBird =async ()=>{
     initialPosBird = {x : scene.current.clientWidth , y :scene.current.clientHeight * 0.2 }
-    const bird = await makeBodyFromSVG(birdPath, initialPosBird ,birdImg)
+    let bird = await makeBodyFromSVG(birdPath, initialPosBird)
     return bird
   }
   const handleMountains = async()=>{
@@ -158,19 +154,12 @@ const addMovementToHurdles = (body,v,initialPos,isRandomY)=>{
   }
 
   const makeBodies = async ()=>{
-  World = Matter.World;
+   World = Matter.World;
    let world = engine.world;
    const pos = {x:100, y:200}
-  superman= await makeBodyFromSVG(supermanPath, pos ,supermanImage )
-  superman.parts.forEach((element , i) => {
-    if( i !==1 ){
-    element.render.sprite.texture = null;
-    }
-  });
-  console.log("superman.partssuperman.parts=",superman.parts)
-   World.add(world, superman);
-
-
+   superman= await makeBodyFromSVG(supermanPath, pos,supermanImage)
+  
+   World.add(world, [superman]);
   }
 
   return (

@@ -2,7 +2,7 @@ import Matter from "matter-js";
 var Vertices = Matter.Vertices,
 Svg = Matter.Svg,
 Bodies = Matter.Bodies;
-export const makeBodyFromSVG  = async (svg,pos ,img,scale)=>{
+export const makeBodyFromSVG  = async (svg,pos,img,scale)=>{
   console.log("img",img)
   let svgs = [svg],body;
   if (typeof fetch !== 'undefined') {
@@ -21,15 +21,24 @@ export const makeBodyFromSVG  = async (svg,pos ,img,scale)=>{
        const scaleFactor = scale ? scale :{x:0.1,y:0.1}
               return Vertices.scale(Svg.pathToVertices(path, 100),scaleFactor.x,scaleFactor.y);
             });
-      body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{render: {
-                fillStyle: "none",
+       body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{render: {
+                // fillStyle: "none",
                 // lineWidth: 1,
-                sprite: {
-                  texture: img
-              }
+              //   sprite: {
+              //     texture: img
+              // }
               }})
     });
-    return body
+    const circle = Matter.Bodies.circle(pos.x,pos.y,5)
+    body.render = circle.render
+   const compoundBody = Matter.Body.create({
+    parts: [body, circle]  });
+    compoundBody.parts.forEach((element , i) => {
+      if( element.label ==="Circle Body" ){
+      element.render.sprite.texture = img;
+      }
+    });
+    return compoundBody
   }
 
 }
@@ -45,3 +54,7 @@ export const makeBodyFromSVG  = async (svg,pos ,img,scale)=>{
     await callback(array[index], index, array);
   }
 }
+
+
+/// add sprite on body 
+
