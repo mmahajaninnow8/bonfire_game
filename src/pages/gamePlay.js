@@ -22,7 +22,7 @@ let inteval = null;
 let SpeedInteval = null;
 const GamePlay = () => {
   let engine;
-  let superman, bird, initialPosBird, mountains, initialPosOfMountain, plane, initialPosPlane, speed;
+  let superman;
   let World;
   const scene = useRef();
   const [score, setScore] = useState(0)
@@ -155,23 +155,22 @@ const GamePlay = () => {
     }
   }
   const moveUp = () => {
+    let direction = 0
     const body = Matter.Body
     if (superman.position.y >= 60) {
-      body.translate(superman, { x: 0, y: -20 })
+      body.setVelocity(superman, { x: 0, y: -0.8 });
     }
   }
   const moveDown = () => {
     const body = Matter.Body
     if (superman.position.y <= 460) {
-      body.translate(superman, { x: 0, y: +20 })
+      body.setVelocity(superman, { x: 0, y: 0.8 })
     }
   }
 
   const makeHurdles = async () => {
     let world = engine.world;
     /// bird
-
-
 
     await handleBird()
 
@@ -200,7 +199,7 @@ const GamePlay = () => {
 
 
     // /// mountains
-    mountains = await handleMountains()
+    await handleMountains()
     // World.add(world, [mountains]);
 
     // setInterval(async () => {
