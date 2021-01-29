@@ -9,8 +9,9 @@ import svgimg3 from"../../assets/images/hills.png";
 const World = Matter.World;
 
 const startBody = ({ body, initialPos, initialSpeed , world}) => {
-  let speedX = initialSpeed.x - 0.2
+  let speedX = initialSpeed.x - 0.5
     speedX = speedX < -10 ? -10 : speedX
+    body.configValue = { initialPos, initialSpeed: {x: speedX , y: 0}, world}
   Matter.Body.setPosition(body, { x: initialPos.x, y: initialPos.y})
   const velocity = {x: speedX, y: 0}
   Matter.Body.setVelocity(body, {x: 0, y: 0})

@@ -8,7 +8,7 @@ const World = Matter.World;
 export const startBody = ({ body, initialPos, initialSpeed , world}) => {
   const superman = world.bodies.find(b => b.label === "superman");
   if(superman){
-    let speedX = initialSpeed.x - 0.2
+    let speedX = initialSpeed.x - 0.5
     speedX = speedX < -10 ? -10 : speedX
     body.configValue = { initialPos, initialSpeed: {x: speedX, y: 0}, world}
   Matter.Body.setPosition(body, { x: initialPos.x, y: superman.position.y})
