@@ -22,8 +22,8 @@ const Routes = (props) => {
 
       <Suspense fallback={loading()}>
         <Switch>
-          <PublicRoute exact path="/game" component={Game} />
-          <PublicRoute exact path="/" component={Matter} />
+          <PublicRoute exact path="/" component={Game} />
+          <PublicRoute exact path="/matter" component={Matter} />
           <NotFound />
         </Switch>
       </Suspense>
