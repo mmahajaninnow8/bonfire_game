@@ -2,7 +2,7 @@ import Matter from "matter-js";
 var Vertices = Matter.Vertices,
 Svg = Matter.Svg,
 Bodies = Matter.Bodies;
-export const makeBodyFromSVG  = async (svg,pos,img,scale)=>{
+export const makeBodyFromSVG  = async (svg,pos,img,scale ,category , mask)=>{
   console.log("img",img)
   let svgs = [svg],body;
   if (typeof fetch !== 'undefined') {
@@ -21,7 +21,10 @@ export const makeBodyFromSVG  = async (svg,pos,img,scale)=>{
        const scaleFactor = scale ? scale :{x:0.07,y:0.07}
               return Vertices.scale(Svg.pathToVertices(path, 100),scaleFactor.x,scaleFactor.y);
             });
-       body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{render: {
+       body =  Bodies.fromVertices(pos.x,pos.y, vertexSets,{ collisionFilter: {
+        category: category,
+        mask: mask 
+    }, render: {
                 // fillStyle: "none",
                 // lineWidth: 1,
               //   sprite: {
@@ -38,6 +41,7 @@ export const makeBodyFromSVG  = async (svg,pos,img,scale)=>{
       element.render.sprite.texture = img;
       }
     });
+    // compoundBody.collisionFilter.mask = collisionFilter
     return compoundBody
   }
 
