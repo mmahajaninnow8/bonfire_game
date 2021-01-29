@@ -8,30 +8,32 @@ import svgimg3 from"../../assets/images/hills.png";
 
 const World = Matter.World;
 
-const resetPosition = ({ body, initialPos, initialSpeed , world}) => {
-  // const superman = world.bodies.find(b => b.label === "superman");
-  // console.log("superman.position.y: ", superman.position.y);
-  // let y = superman.position.y - 80
-  // y = y < 80 ? 80 : y
+const startBody = ({ body, initialPos, initialSpeed , world}) => {
+  let speedX = initialSpeed.x - 0.5
+    speedX = speedX < -10 ? -10 : speedX
+    body.configValue = { initialPos, initialSpeed: {x: speedX , y: 0}, world}
   Matter.Body.setPosition(body, { x: initialPos.x, y: initialPos.y})
-  const velocity = {x: initialSpeed.x, y: 0}
-  Matter.Body.setVelocity(body, velocity)
+  const velocity = {x: speedX, y: 0}
+  Matter.Body.setVelocity(body, {x: 0, y: 0})
   setTimeout(() => {
-    resetPosition({ body, initialPos, initialSpeed: velocity, world})
-  }, (10000))
+    Matter.Body.setVelocity(body, velocity)
+  }, (100))
 }
 
 
 const Mountain = async ({ speed, initialPosBird, world, supermanPosition }) => {
-  let bird = await makeBodyFromSVG(mountainPath, initialPosBird ,svgimg3)
-  bird.friction = 0;
-  bird.frictionAir = 0;
-  bird.label = 'mountain'
-  const input = { body: bird , initialPos:initialPosBird, initialSpeed: speed , world: world}
-  // Matter.Body.setVelocity(bird, speed)
-  resetPosition(input);
-  World.add(world, [bird]);
-  return bird
+  let mountain = await makeBodyFromSVG(mountainPath, initialPosBird ,svgimg3)
+  mountain.friction = 0;
+  mountain.frictionAir = 0;
+  mountain.label = 'mountain';
+  mountain.collisionFilter.mask = 0x0004 | 0x0008;
+  mountain.collisionFilter.category = 0x0002;
+  const input = { body: mountain , initialPos:initialPosBird, initialSpeed: speed , world: world}
+  startBody(input);
+  mountain.configValue = { initialPos: initialPosBird, initialSpeed: speed, world}
+  mountain.startBody = startBody;
+  World.add(world, [mountain]);
+  return mountain
 }
 
 export default Mountain;
