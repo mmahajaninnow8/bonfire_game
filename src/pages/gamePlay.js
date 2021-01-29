@@ -158,13 +158,13 @@ const GamePlay = () => {
     let direction = 0
     const body = Matter.Body
     if (superman.position.y >= 60) {
-      body.setVelocity(superman, { x: 0, y: -0.8 });
+      body.setVelocity(superman, { x: 0, y: -2 });
     }
   }
   const moveDown = () => {
     const body = Matter.Body
     if (superman.position.y <= 460) {
-      body.setVelocity(superman, { x: 0, y: 0.8 })
+      body.setVelocity(superman, { x: 0, y: 2 })
     }
   }
 
