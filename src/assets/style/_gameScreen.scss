@@ -13,14 +13,14 @@
       span {
         background-size: 100% auto;
         background-image: url("../images/moon-07.png");
-        animation: animatedB 90s infinite linear;
+        animation: animatedB 400s infinite linear;
         background-position: top center;
       }
     }
     &.layer1 {
       span {
         background-image: url("../images/hills-06.png");
-        animation: animatedB 90s infinite linear;
+        animation: animatedB 300s infinite linear;
         background-position: top center;
         // background-size: 50% auto;
       }
@@ -28,7 +28,7 @@
     &.layer2 {
       span {
         background-image: url("../images/hills-05.png");
-        animation: animatedB 50s infinite linear;
+        animation: animatedB 250s infinite linear;
         // background-size: 100% 700px;
         // background-position: top center;
         //opacity: 0.8;
@@ -37,7 +37,7 @@
     &.layer3 {
       span {
         background-image: url("../images/hills-04.png");
-        animation: animatedB 30s infinite linear;
+        animation: animatedB 200s infinite linear;
         // background-size: 200% 500px;
         // opacity: 0.9;
       }
@@ -45,7 +45,7 @@
     &.layer4 {
       span {
         background-image: url("../images/hills-03.png");
-        animation: animatedB 43s infinite linear;
+        animation: animatedB 150s infinite linear;
         background-position: top center;
         //background-size: 217% auto;
       }
@@ -53,13 +53,13 @@
     &.layer5 {
       span {
         background-image: url("../images/hills-02.png");
-        animation: animatedB 12s infinite linear;
+        animation: animatedB 70s infinite linear;
       }
     }
     &.layer6 {
       span {
         background-image: url("../images/hills-01.png");
-        animation: animatedB 7s infinite linear;
+        animation: animatedB 30s infinite linear;
         //background-size: 230% auto;
       }
     }
