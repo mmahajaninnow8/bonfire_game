@@ -13,8 +13,10 @@ const startBody = ({ body, initialPos, initialSpeed , world}) => {
   // console.log("superman.position.y: ", superman.position.y);
   // let y = superman.position.y - 80
   // y = y < 80 ? 80 : y
+  let speedX = initialSpeed.x - 0.2
+    speedX = speedX < -10 ? -10 : speedX
   Matter.Body.setPosition(body, { x: initialPos.x, y: initialPos.y})
-  const velocity = {x: initialSpeed.x, y: 0}
+  const velocity = {x: speedX, y: 0}
   Matter.Body.setVelocity(body, {x: 0, y: 0})
   setTimeout(() => {
     Matter.Body.setVelocity(body, velocity)
@@ -26,7 +28,9 @@ const Mountain = async ({ speed, initialPosBird, world, supermanPosition }) => {
   let mountain = await makeBodyFromSVG(mountainPath, initialPosBird ,svgimg3)
   mountain.friction = 0;
   mountain.frictionAir = 0;
-  mountain.label = 'mountain'
+  mountain.label = 'mountain';
+  mountain.collisionFilter.mask = 0x0004 | 0x0008;
+  mountain.collisionFilter.category = 0x0002;
   const input = { body: mountain , initialPos:initialPosBird, initialSpeed: speed , world: world}
   // Matter.Body.setVelocity(bird, speed)
   startBody(input);

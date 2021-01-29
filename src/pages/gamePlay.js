@@ -343,13 +343,18 @@ console.log("superman",superman ,bird)
   }
 
   const makeBodies = async () => {
-      const wall = Matter.Bodies.rectangle(10, 0, 10 , scene.current.clientHeight * 2)
+      const wall = Matter.Bodies.rectangle(-200, 0, 10 , scene.current.clientHeight * 2)
       wall.label = "wall";
       wall.isStatic = true;
+      wall.collisionFilter.mask =  0x0002 ;
+      wall.collisionFilter.category = 0x0008;
     World = Matter.World;
     let world = engine.world;
     const pos = { x: 100, y: 200 }
     superman = await makeBodyFromSVG(supermanPath, pos, supermanImage , null  )
+    superman.collisionFilter.mask =  0x0002 ;
+    superman.collisionFilter.category = 0x0004;
+
     superman.label = "superman";
     World.add(world, [superman ,wall]);
   }
