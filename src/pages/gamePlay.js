@@ -44,9 +44,24 @@ const GamePlay = () => {
 
     ///calculate score 
     updateScore()
+    window.addEventListener("keyup", event => {
+      var key_code = event.keyCode
+      const body = Matter.Body
 
+      event.preventDefault();
+      switch (key_code) {
+        case 38: //Up arrow key
+        body.setVelocity(superman, { x: 0, y: 0 });
+        break;
+        case 40: //down arrow key
+        body.setVelocity(superman, { x: 0, y: 0 });
+        break;
+      }
+      // do something
+    });
     window.addEventListener('keydown', (e) => {
       var key_code = e.keyCode
+
       e.preventDefault();
       switch (key_code) {
         case 38: //Up arrow key
@@ -159,6 +174,7 @@ const GamePlay = () => {
     const body = Matter.Body
     if (superman.position.y >= 60) {
       body.setVelocity(superman, { x: 0, y: -2 });
+
     }
   }
   const moveDown = () => {
