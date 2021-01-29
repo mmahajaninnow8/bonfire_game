@@ -28,7 +28,6 @@ const Bird = async ({ speed, initialPosBird, world, supermanPosition, scene }) =
   let bird = await makeBodyFromSVG(birdPath, initialPosBird ,birdImg  )
   bird.friction = 0;
   bird.frictionAir = 0;
-  console.log("birdbirdbird",bird)
   bird.label = 'bird'
   bird.collisionFilter.mask =  0x0004 | 0x0008 ;
   bird.collisionFilter.category = 0x0002;

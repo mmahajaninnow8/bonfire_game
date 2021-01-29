@@ -9,10 +9,6 @@ import svgimg3 from"../../assets/images/hills.png";
 const World = Matter.World;
 
 const startBody = ({ body, initialPos, initialSpeed , world}) => {
-  // const superman = world.bodies.find(b => b.label === "superman");
-  // console.log("superman.position.y: ", superman.position.y);
-  // let y = superman.position.y - 80
-  // y = y < 80 ? 80 : y
   let speedX = initialSpeed.x - 0.2
     speedX = speedX < -10 ? -10 : speedX
   Matter.Body.setPosition(body, { x: initialPos.x, y: initialPos.y})
@@ -32,7 +28,6 @@ const Mountain = async ({ speed, initialPosBird, world, supermanPosition }) => {
   mountain.collisionFilter.mask = 0x0004 | 0x0008;
   mountain.collisionFilter.category = 0x0002;
   const input = { body: mountain , initialPos:initialPosBird, initialSpeed: speed , world: world}
-  // Matter.Body.setVelocity(bird, speed)
   startBody(input);
   mountain.configValue = { initialPos: initialPosBird, initialSpeed: speed, world}
   mountain.startBody = startBody;

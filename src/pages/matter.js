@@ -106,7 +106,6 @@ let svgs = [svgimg1 ];
     };
     svgs.forEach(function (path, i) {
       loadSvg(path).then(function (root) {
-        console.log("root", root)
         var color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
         const vertexSets = select(root, 'path')
           .map(function (path) {

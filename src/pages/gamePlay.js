@@ -5,10 +5,10 @@ import Header from "../components/Header";
 import cartoon2 from "../assets/images/cartoon2.png";
 import cartoon from "../assets/images/cartoon1.png";
 import birdImg from "../assets/images/bird.png";
-import supermanPath from"../assets/images/supermanOutline.svg";
-import birdPath from"../assets/images/bird6.svg";
-import {makeBodyFromSVG,addSpriteBody} from '../utilities/utility'
-import supermanImage from"../assets/images/man.png";
+import supermanPath from "../assets/images/supermanOutline.svg";
+import birdPath from "../assets/images/bird6.svg";
+import { makeBodyFromSVG, addSpriteBody } from '../utilities/utility'
+import supermanImage from "../assets/images/man.png";
 import Bird from './hurdles/bird';
 import Plane from './hurdles/plane';
 import Mountain from './hurdles/mountain';
@@ -22,7 +22,7 @@ let inteval = null;
 let SpeedInteval = null;
 const GamePlay = () => {
   let engine;
-  let superman, bird, initialPosBird, mountains, initialPosOfMountain, plane, initialPosPlane , speed;
+  let superman, bird, initialPosBird, mountains, initialPosOfMountain, plane, initialPosPlane, speed;
   let World;
   const scene = useRef();
   const [score, setScore] = useState(0)
@@ -32,16 +32,15 @@ const GamePlay = () => {
   const speedval = useRef(5)
   const scoreRef = useRef(0)
 
-console.log("speedval",speedval)
   const updateScore = () => {
     inteval = setInterval(() => {
-      setScore(prev => { scoreRef.current = prev + 1; return prev + 1})
-      
+      setScore(prev => { scoreRef.current = prev + 1; return prev + 1 })
+
     }, 1000);
   }
-  
-    
-  useEffect( async() => {
+
+
+  useEffect(async () => {
 
     ///calculate score 
     updateScore()
@@ -49,7 +48,6 @@ console.log("speedval",speedval)
     window.addEventListener('keydown', (e) => {
       var key_code = e.keyCode
       e.preventDefault();
-      console.log("key_codekey_code=", key_code)
       switch (key_code) {
         case 38: //Up arrow key
           moveUp();
@@ -80,7 +78,7 @@ console.log("speedval",speedval)
         width: scene.current.clientWidth,
         height: scene.current.clientHeight,
         wireframes: false,
-        background:"rgba(#fff, 0.8)",
+        background: "rgba(#fff, 0.8)",
         // border : 10px solid red
       }
     });
@@ -92,8 +90,7 @@ console.log("speedval",speedval)
 
     // updates physics
     let direction = 1;
-    Matter.Events.on(engine, 'collisionStart',   function (ev) {
-      console.log("ev: ", [...ev.pairs], scoreRef.current)
+    Matter.Events.on(engine, 'collisionStart', function (ev) {
       const arr = [...ev.pairs]
       if (arr.length === 0) {
         return;
@@ -104,7 +101,7 @@ console.log("speedval",speedval)
       let hurdle;
       let superman;
       if (bodyA.label === "wall" || bodyB.label === "wall") {
-        wall = bodyA.label === "wall"? bodyA : bodyB;
+        wall = bodyA.label === "wall" ? bodyA : bodyB;
       }
 
       if (hurdlesLabel.includes(bodyA.label) || hurdlesLabel.includes(bodyB.label)) {
@@ -112,13 +109,12 @@ console.log("speedval",speedval)
       }
 
       if (bodyA.label === "superman" || bodyB.label === "superman") {
-        superman = bodyA.label === "superman"? bodyA : bodyB;
+        superman = bodyA.label === "superman" ? bodyA : bodyB;
       }
 
-      console.log("wallwallwall=",wall)
-      console.log("hurdleshurdleshurdles=",hurdle)
-      if(wall && hurdle){
-        hurdle.startBody({...hurdle.configValue, body: hurdle})
+
+      if (wall && hurdle) {
+        hurdle.startBody({ ...hurdle.configValue, body: hurdle })
         return;
       }
 
@@ -126,28 +122,10 @@ console.log("speedval",speedval)
         return
       }
 
-// return
-      // if (bodyB.label === "wall") {
-      //   wall = bodyB;
-      // }
-
-      // if (bodyA.label === "bird") {
-      //   bird = bodyA;
-      // }
-      // if (bodyB.label === "bird") {
-      //   bird = bodyB;
-      // }
-
-      // if (!!wall && !!bird) {
-      //   bird.startBody({...bird.configValue, body: bird})
-      //   return;
-      // }
-
-
 
       const prevHighScore = localStorage.getItem('highScore') || 0;
       if (prevHighScore < scoreRef.current) {
-        localStorage.setItem('highScore',scoreRef.current)
+        localStorage.setItem('highScore', scoreRef.current)
       }
       setIsOpen(true)
       clearInterval(inteval);
@@ -155,58 +133,7 @@ console.log("speedval",speedval)
       Engine.clear(engine);
       Render.stop(render);
     })
-    //   const val = Math.floor(Math.random() * 5) + 2;
-    //   console.log("velocity speedval",speedval)
-    //    speed = {
-    //     x: direction * (-speedval.current),
-    //     y: 0
-    //   }
 
-    //   if (mountains) {
-    //     const dir = addMovementToHurdles(mountains, speed, initialPosOfMountain)
-    //     direction = dir
-    //     let collision = Matter.SAT.collides(superman, mountains);
-    //     if (collision && collision.collided) {
-    //       // localStorage.setItem('highScore',highScore)
-    //       localStorage.setItem('highScore',score)
-    //       setHighScore(score)
-    //       clearInterval(inteval)
-    //       clearInterval(SpeedInteval)
-    //       direction = 0
-    //       alert("collide")
-    //     }
-    //   }
-    //   if (plane) {
-    //     const height = scene.current.clientHeight
-    //     const width = scene.current.clientWidth
-    //     const randomY = Math.floor(Math.random() * height * 0.2) + height * 0.1
-    //     const dir = addMovementToHurdles(plane, speed, initialPosPlane, randomY)
-    //     direction = dir
-    //     let collision = Matter.SAT.collides(superman, plane);
-    //     if (collision && collision.collided) {
-    //       localStorage.setItem('highScore',highScore)
-    //       clearInterval(inteval)
-    //       clearInterval(SpeedInteval)
-    //       direction = 0
-    //       alert("collide")
-    //     }
-    //   }
-    //   if (bird) {
-    //     const height = scene.current.clientHeight
-    //     const width = scene.current.clientWidth
-    //     const randomY = Math.floor(Math.random() * height * 0.3) + height * 0.2
-    //     const dir = addMovementToHurdles(bird, speed, initialPosBird, superman.position.y)
-    //     direction = dir
-    //     let collision = Matter.SAT.collides(superman, bird);
-    //     if (collision && collision.collided) {
-    //       localStorage.setItem('highScore',highScore)
-    //       clearInterval(inteval)
-    //       clearInterval(SpeedInteval)
-    //       direction = 0
-    //       alert("collide")
-    //     }
-    //   }
-    // })
     Engine.run(engine);
     Render.run(render);
   }, [])
@@ -217,7 +144,6 @@ console.log("speedval",speedval)
     Matter.Body.setVelocity(body, v)
     const p = body.position
     const endPoint = body.bounds.max.x - body.bounds.min.x
-    // console.log("endPointendPoint=",endPoint)
     if (p.x < -endPoint) {
       const direction = 0
       const y = isRandomY ? isRandomY : initialPos.y
@@ -230,13 +156,13 @@ console.log("speedval",speedval)
   }
   const moveUp = () => {
     const body = Matter.Body
-    if(superman.position.y >= 60){
+    if (superman.position.y >= 60) {
       body.translate(superman, { x: 0, y: -20 })
     }
   }
   const moveDown = () => {
     const body = Matter.Body
-    if(superman.position.y <= 460){
+    if (superman.position.y <= 460) {
       body.translate(superman, { x: 0, y: +20 })
     }
   }
@@ -245,7 +171,7 @@ console.log("speedval",speedval)
     let world = engine.world;
     /// bird
 
-    
+
 
     await handleBird()
 
@@ -283,11 +209,6 @@ console.log("speedval",speedval)
 
 
   }
-  // const handlePlane = async () => {
-  //   initialPosPlane = { x: scene.current.clientWidth + scene.current.clientWidth * 0.2, y: scene.current.clientHeight * 0.1 }
-  //   let palne = await makeBodyFromSVG(palnepath, initialPosPlane , planeImage)
-  //   return palne
-  // }
 
 
   const handlePlane = async () => {
@@ -297,13 +218,7 @@ console.log("speedval",speedval)
       x: (-5),
       y: 0
     }
-    console.log("initialPosBird",initialPosBird)
     const plane = await Plane({ speed, initialPosBird, world, supermanPosition: superman.position, scene })
-    // let collision = Matter.SAT.collides(superman, plane);
-    // if (collision && collision.collided) {
-    //   // localStorage.setItem('highScore',highScore)
-    //   alert("collide")
-    // }
     return plane
   }
 
@@ -315,12 +230,7 @@ console.log("speedval",speedval)
       y: 0
     }
     const bird = await Bird({ speed, initialPosBird, world, supermanPosition: superman.position, scene })
-console.log("superman",superman ,bird)
-    // let collision = Matter.SAT.collides(superman, bird);
-        // if (collision && collision.collided) {
-        //   localStorage.setItem('highScore',highScore)
-        //   alert("collide")
-        // }
+
 
     return bird
   }
@@ -334,31 +244,26 @@ console.log("superman",superman ,bird)
       y: 0
     }
     const mountain = await Mountain({ speed, initialPosBird: initialPosOfMountain, world, supermanPosition: superman.position, scene })
-    // let collision = Matter.SAT.collides(superman, mountain);
-    // if (collision && collision.collided) {
-    //   localStorage.setItem('highScore',highScore)
-    //   alert("collide")
-    // }
+
     return mountain
   }
 
   const makeBodies = async () => {
-      const wall = Matter.Bodies.rectangle(-200, 0, 10 , scene.current.clientHeight * 2)
-      wall.label = "wall";
-      wall.isStatic = true;
-      wall.collisionFilter.mask =  0x0002 ;
-      wall.collisionFilter.category = 0x0008;
+    const wall = Matter.Bodies.rectangle(-200, 0, 10, scene.current.clientHeight * 2)
+    wall.label = "wall";
+    wall.isStatic = true;
+    wall.collisionFilter.mask = 0x0002;
+    wall.collisionFilter.category = 0x0008;
     World = Matter.World;
     let world = engine.world;
     const pos = { x: 100, y: 200 }
-    superman = await makeBodyFromSVG(supermanPath, pos, supermanImage , null  )
-    superman.collisionFilter.mask =  0x0002 ;
+    superman = await makeBodyFromSVG(supermanPath, pos, supermanImage, null)
+    superman.collisionFilter.mask = 0x0002;
     superman.collisionFilter.category = 0x0004;
 
     superman.label = "superman";
-    World.add(world, [superman ,wall]);
+    World.add(world, [superman, wall]);
   }
-  console.log("scorescore=", score)
   return (
     <div className="GameScreen"  >
       <div className="slide-view layer0" >
@@ -383,9 +288,9 @@ console.log("superman",superman ,bird)
         <span />
       </div>
       <div className="GameScreen-bg" ref={scene}>
-        <Header score={score} highScore= {highScore}/>
-<EndGame isOpen ={isOpen} score ={score}/>
-       
+        <Header score={score} highScore={highScore} />
+        <EndGame isOpen={isOpen} score={score} />
+
       </div>
     </div>
   );

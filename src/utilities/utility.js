@@ -3,7 +3,6 @@ var Vertices = Matter.Vertices,
 Svg = Matter.Svg,
 Bodies = Matter.Bodies;
 export const makeBodyFromSVG  = async (svg,pos,img,scale ,category , mask)=>{
-  console.log("img",img)
   let svgs = [svg],body;
   if (typeof fetch !== 'undefined') {
     var select = function (root, selector) {
